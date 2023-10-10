@@ -1,10 +1,10 @@
 ✅ 01-Fundamentals-Part-1
 ✅ 02-Fundamentals-Part-2
 ✅ 03-Developer-Skills
-✅ 04-HTML-CSS/final
+⭕️ 04-HTML-CSS/final
 ✅ 05-Guess-My-Number
 ✅ 06-Modal
-07-Pig-Game
+✅ 07-Pig-Game
 08-Behind-the-Scenes
 09-Data-Structures-Operators
 10-Functions
