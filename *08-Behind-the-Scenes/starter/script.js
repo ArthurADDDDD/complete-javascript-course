@@ -33,20 +33,21 @@
 // console.log(calcAge(1991), test, typeof test)
 
 
-function test() {
-    console.log(this)
-}
+// function test() {
+//     console.log(this)
+// }
 
-test();
+// test();
 
-const testExr = function () {
-    console.log(this)
-}
+// const testExr = function () {
+//     console.log(this)
+// }
 
-testExr();
+// testExr();
 
-const testArrow = () => {
-    console.log(this)
-}
+// const testArrow = () => {
+//     console.log(this)
+// }
 
-testArrow();
+// testArrow();
+

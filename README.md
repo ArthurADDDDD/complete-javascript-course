@@ -4,8 +4,8 @@
 ⭕️ 04-HTML-CSS/final
 ✅ 05-Guess-My-Number
 ✅ 06-Modal
-✅ 07-Pig-Game
-08-Behind-the-Scenes
+23.10.9  ✅ 07-Pig-Game
+23.10.12 ✅ 08-Behind-the-Scenes
 09-Data-Structures-Operators
 10-Functions
 11-Arrays-Bankist
