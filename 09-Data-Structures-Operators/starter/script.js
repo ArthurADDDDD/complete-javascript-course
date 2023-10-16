@@ -281,63 +281,105 @@ const game = {
   },
 };
 
+/*
+
+// 守门员
 const gk1 = (game.players[0])[0];
 const gk2 = (game.players[1])[0];
 
-const [fieldPlayer1, fieldPlayer2] = [
-  [...game.players[0]],
-  [...game.players[1]]
-];
-
-console.log(gk1, gk2);
-console.log('player1:', fieldPlayer1, 'player2:', fieldPlayer2);
-/*
-
-const players1 = {
-
-  allPlayers: [
-    'Davie',
-    'Muller',
-    'Smith',
-    'Johnson',
-    'Brown',
-    'Taylor',
-    'Williams',
-    'Jones',
-    'Garcia',
-    'Miller',
-    'Davis',
-  ],
-
+// 各队球员
+const fieldCount = (teamNum) => {
+  const currentTeam = game.players[teamNum];
+  let temp = [];
+  for (let i = 1; i < currentTeam.length; i++) {
+    temp.push(currentTeam[i]);
+  }
+  return temp;
 };
+const [fieldPlayer1, fieldPlayer2] = [fieldCount(0), fieldCount(1)];
 
-const players2 = {
-
-  allPlayers: [
-    'Rodriguez',
-    'Martinez',
-    'Hernandez',
-    'Lopez',
-    'Gonzalez',
-    'Nelson',
-    'Anderson',
-    'Lee',
-    'Wilson',
-    'Thomas',
-    'Moore',
-  ],
-
-};
-
-const [gk1, gk2] = [players1.allPlayers[0], players2.allPlayers[0]];
-// const [fieldPlayer1, fieldPlayer2] = [
-//   players1.allPlayers,
-//   players2.allPlayers
-// ];
-
-const fieldPlayer1 = players1.allPlayers;
-const fieldPlayer2 = '';
-
-console.log(fieldPlayer1, fieldPlayer2)
 
 */
+
+// 1
+const [players1, players2] = game.players;
+
+// 2
+const [gk, ...fieldPlayers] = players1;
+
+// 3
+const allPlayers = [...players1, ...players2];
+
+// 4 最终出场成员team1
+const players1Final = [...game.players[0], 'Thiago', 'Countinho', 'perisic'];
+
+// 5 将game里odds中的内容解构成三个新的对象
+const { odds: { team1, x: draw, team2 } } = game;
+
+//6 提示有几个人得分了
+const printGoals = (...players) => {
+  // 必须要加...，才能正确识别输入了多少个players
+  // 不然的话计算出来的只会是第一个值被分解成string后的长度
+  console.log(`${players.length} goals were scored!`)
+}
+
+printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+printGoals(...game.scored);
+
+/*
+
+// 打印目标
+const printGoals = (name) => {
+  let number;
+  let score = 0;
+
+  for (let x = 0; x < 2; x++) {
+    let currentTeam = game.players[x]
+
+    for (let i = 0; i < currentTeam.length; i++) {
+
+      if ((currentTeam)[i] === name) {
+        number = i;
+      }
+    }
+  }
+
+  console.log(`Player name: ${name},Player Numbers: ${number}, Total score:${score}`)
+}
+
+printGoals('Davies');
+printGoals('Muller');
+printGoals('Lewandowski');
+printGoals('Kimmich');
+
+*/
+
+// 判断谁要赢
+const scores = game.odds;
+
+// 一个就够了
+scores.team1 > scores.team2 && console.log('Team1 看起来赢面很大') ||
+  scores.team1 < scores.team2 && console.log('Team1 看起来要输了')
+
+// scores.team2 > scores.team1 && console.log('Team2 看起来赢面很大') ||
+// scores.team2 < scores.team1 && console.log('Team2 看起来要输了');
+
+// for (const all of allPlayers) {
+//   console.log(all);
+// }
+
+
+// for (const all of allPlayers.entries()) {
+//   // .entries()迭代器，每次迭代会包含计数器跟内容
+
+//   console.log(`Menu ${all[0] + 1}: ${all[1]}`)
+//   // 因为第一个数组的数字是0，所以要[0] + 1
+//   // all[1] 则是迭代器的第二个内容，实际内容
+// }
+
+// 解构后
+for (const [i, el] of allPlayers.entries()) {
+  // .entries()迭代器，每次迭代会包含计数器跟内容
+
+  console.log(`Menu ${i + 1}: ${el}`)
+}
