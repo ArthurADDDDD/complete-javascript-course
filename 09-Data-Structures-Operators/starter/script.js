@@ -301,6 +301,8 @@ const [fieldPlayer1, fieldPlayer2] = [fieldCount(0), fieldCount(1)];
 
 */
 
+/*
+
 // 1
 const [players1, players2] = game.players;
 
@@ -352,7 +354,7 @@ printGoals('Muller');
 printGoals('Lewandowski');
 printGoals('Kimmich');
 
-*/
+
 
 // 判断谁要赢
 const scores = game.odds;
@@ -368,7 +370,6 @@ scores.team1 > scores.team2 && console.log('Team1 看起来赢面很大') ||
 //   console.log(all);
 // }
 
-
 // for (const all of allPlayers.entries()) {
 //   // .entries()迭代器，每次迭代会包含计数器跟内容
 
@@ -382,4 +383,238 @@ for (const [i, el] of allPlayers.entries()) {
   // .entries()迭代器，每次迭代会包含计数器跟内容
 
   console.log(`Menu ${i + 1}: ${el}`)
+};
+
+
+
+const { openingHours } = restaurant;
+
+// for of其他用法解释：
+// Object.keys() 提取对象的名字
+// Object.values() 提取对象里的内容
+const propertiesName = Object.keys(openingHours);
+const propertiesValue = Object.values(openingHours);
+const propertiesEntries = Object.entries(openingHours);
+
+let alert = `Our restaurant open ${propertiesName.length} days a week: `;
+
+for (const days of propertiesName) alert += days + ', ';
+
+// Object.entries() 提取对象的所有内容，包含keys、values还有迭代次数产生的序号
+// for (const x of propertiesEntries) console.log(x);
+
+// 由于提取出来的array是：[KeyWord][value1][value2]，所以可以直接解构并输出结果
+for (const [theDays, { open, close }] of propertiesEntries) {
+  // const用[]，array的方法来进行，可以按顺序解构出[0,1,2]的值出来
+  console.log(`We open on ${theDays},
+  Open at: ${open}.am,
+  Close at: ${close}.pm.`)
 }
+
+*/
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+Let's continue with our football betting app!
+
+1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+      Odd of victory Bayern Munich: 1.33
+      Odd of draw: 3.25
+      Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+      {
+        Gnarby: 1,
+        Hummels: 1,
+        Lewandowski: 2
+      }
+
+GOOD LUCK 😀
+*/
+
+// Example: 'Goal 1: Lewandowski'
+const goalsAchive = game.scored;
+
+for (const [goals, name] of Object.entries(goalsAchive))
+  console.log(`Goal ${Number(goals) + 1}: ${name}.`);
+
+// 第二步看不懂
+const odd = Object.values(game.odds);
+let average = 0;
+for (const odds of odd)
+  average += odds
+average /= odd.length;
+console.log(average)
+
+// Print the 3 odds to the console
+// team1和team2是game里有的值，x是里面没有的值
+const oddsProperties = Object.entries(game.odds);
+
+for (const [key, score] of oddsProperties) {
+  const printOdds = `Odd of ${game[key] && 'victory' + ' ' + game[key] || 'draw'}: ${score}`;
+  console.log(printOdds);
+}
+
+// BONUS: Creat an object called 'scorers'
+
+const scorers = [];
+
+for (const player of game.scored) {
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+
+  // if (scorers[player] == true) {
+  //   scorers[player]++;
+  // } else {
+  //   scorers[player] = 1;
+  // }
+
+  // scorers[player] && scorers[player]++ || scorers[player] || (scorers[player] = 1);
+
+}
+
+console.log(scorers);
+
+const ceshi = new Set([
+  'hello',
+  'hey',
+  'what>',
+  'hello',
+  'hello',
+  'hey',
+  'heysl'
+])
+console.log(ceshi);
+
+// const ceshi2 = new Map();
+// ceshi2.set('hello', 3)
+//   .set(true, '对对对的')
+//   .set(false, '错错错的')
+//   .set('openTime', 11)
+//   .set('closeTime', 23)
+// console.log(ceshi2)
+
+
+const question = new Map([
+  ['question', 'what is the best language of coding?'],
+  [1, 'Python'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'You are right!'],
+  [false, 'Of course not~']
+])
+
+// const answer = Number(prompt(question.get('question')));
+// document.querySelector('h1').textContent = answer === question.get('correct') ? question.get(true) : question.get(false);
+
+// document.querySelector('h1').textContent = question.get(answer === question.get('correct'));
+
+
+
+///////////////////////////////////////
+// Coding Challenge #3
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+/*
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+// 1
+const events = [...new Set(gameEvents.values())];
+
+// 2
+gameEvents.delete(64);
+
+// 3
+const endTimes = [...gameEvents.keys()].pop();
+console.log(`An event happened, on average, every ${endTimes / gameEvents.size} minutes`);
+
+// 4
+for (const [time, events] of gameEvents) {
+  const half = time <= 45 ? 'FIRST' : 'SECOND';
+  console.log(`[${half} HALF]${time}: ${events}.`);
+}
+
+*/
+
+
+// String Method：
+
+// XXX.indexOf() / XXX.lastIndexOf() : indexOf查找功能;
+// XXX.slice() : Slice切割功能;
+// XXX.toLowerCase() / XXX.toUpperCase() : 大小写功能；
+// XXX.trim() : 裁切空格以及其它不合规input；
+// XXX.replace() :replace可连续使用，且大小写敏感
+//（如果需要适配性好的替换，可以用(/值/g, ' ')来表示 ——/值/global）;
+
+// XXX.includes() :返回布尔值，大小写敏感;
+// XXX.startsWith() / XXX.endsWith() :返回布尔值，大小写敏感
+
+// ECMAScript 2021规范中引入： XXX.replaceAll();
+
+const ceshiX = 'hellsiichoanks';
+console.log(ceshiX.lastIndexOf('i'));
+
+
+console.log(ceshiX.slice(-5)); // output: oanks;
+
+const wrongName = 'jOnAs'; // Jonas
+const lowerCase = wrongName.toLowerCase(); // jonas
+const correctName = wrongName[0].toUpperCase() + lowerCase.slice(1); // Jonas
+
+console.log(wrongName, lowerCase, correctName);
+
+
+const email = 'helloyouha@ppp.io';
+const loginEmail = '   hellOYouHA@ppp.io \n';
+
+const normalize = (data) => {
+  const normalize = (data.trim()).toLowerCase();
+  // 首先trim删去不合规文字，然后将其转为小写
+  return normalize
+}
+
+console.log(email === normalize(loginEmail));
+
+const priceCN = '8000,8888¥';
+// const priceUS = priceCN.replace('¥', '$') && priceCN.replace(',', '.');
+const priceUS = priceCN.replace('¥', '$').replace(',', '.');
+
+// 继续添加.replace能够继续运算，如果想用&&的话也行，但是代码会变多没意义
+// .replace只会更改一次，并且不对原本的值造成永久影响
+console.log(priceUS);
+
+
+// .split()
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+// 返回(2) ['Jonas', 'Schmedtmann']
+
+console.log(firstName, '啊啊啊', lastName)
