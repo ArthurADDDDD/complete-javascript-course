@@ -573,12 +573,17 @@ for (const [time, events] of gameEvents) {
 // XXX.toLowerCase() / XXX.toUpperCase() : 大小写功能；
 // XXX.trim() : 裁切空格以及其它不合规input；
 // XXX.replace() :replace可连续使用，且大小写敏感
-//（如果需要适配性好的替换，可以用(/值/g, ' ')来表示 ——/值/global）;
-
-// XXX.includes() :返回布尔值，大小写敏感;
-// XXX.startsWith() / XXX.endsWith() :返回布尔值，大小写敏感
-
 // ECMAScript 2021规范中引入： XXX.replaceAll();
+//（如果需要适配性好的替换，可以用(/值/g, ' ')来表示 ——/值/global）;
+// XXX.join(' ') :将array中的keys用()内的内容连接;
+// XXX.padStart() / XXX.padEnd() :(Num, '填充内容')通过设置string的数量，填充输入的内容;
+// 若string的长度小于设定值，则会直接返回当前的string;
+// XXX.repeat() :()内输入数值，为重复次数;
+
+// Boorlean
+// XXX.includes() :返回布尔值，大小写敏感;
+// XXX.startsWith() / XXX.endsWith() :返回布尔值，大小写敏感;
+
 
 const ceshiX = 'hellsiichoanks';
 console.log(ceshiX.lastIndexOf('i'));
@@ -617,4 +622,108 @@ console.log(priceUS);
 const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
 // 返回(2) ['Jonas', 'Schmedtmann']
 
-console.log(firstName, '啊啊啊', lastName)
+console.log(firstName, '啊啊啊', lastName);
+
+const nameFormat = (name) => {
+  const convertArray = name.split(' ');
+  const output = [];
+
+  for (const x of convertArray) {
+    // 方法1
+    // output.push(x[0].toUpperCase() + (x.slice(1)).toLowerCase())
+
+    // 方法2
+    output.push(x[0].replace(x[0], x[0].toUpperCase()) + (x.slice(1)).toLowerCase());
+  }
+
+  console.log(output.join(' '))
+};
+
+nameFormat('john smith ppa');
+nameFormat('johnny walKKer');
+nameFormat('JOhny C silverhand');
+
+// 切掉第三个以后的内容并且输出以'*'填充，yourPassword为隐藏密码，safetyPassword为显示密码：
+// const yourPassword = prompt('please enter your password(10 String Max)');
+
+// const safetyPassword = yourPassword.replace(yourPassword.slice(3), '')
+// document.querySelector('h1').textContent = safetyPassword.padEnd(10, '*');
+
+// 另一种方法。更加灵活、代码更少：
+const safetyPass = (number) => {
+  let str = number + '';
+
+  const last = str.slice(-4);
+
+  console.log(last.padStart(str.length, '*'), str.length)
+}
+
+safetyPass(12312312321);
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+THIS TEST DATA (pasted to textarea)
+underscore_case
+first_name
+Some_Variable 
+  calculate_AGE
+delayed_departure
+
+SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+underscoreCase      ✅
+firstName           ✅✅
+someVariable        ✅✅✅
+calculateAge        ✅✅✅✅
+delayedDeparture    ✅✅✅✅✅
+
+HINT 1: Remember which character defines a new line in the textarea 😉
+HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
+
+Afterwards, test with your own test data!
+
+GOOD LUCK 😀
+*/
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+const input = { 0: '', 1: '', 2: '111', 3: '', 4: '', };
+let i = 0;
+
+document.querySelector('button').addEventListener('click', function () {
+  i++;
+  const getText = document.querySelector('textarea');
+  input[i] = getText.value;
+
+  const standardlize = (i) => {
+    const upper = i.indexOf('_');
+
+    // 1.找到_之后的第一个字母，将其转为大写
+    const newString = i.toLowerCase();
+    const replaceString = newString.replace('_', '');
+    const cuttingString = replaceString.slice(upper);
+
+    const str = replaceString.slice(0, upper);
+    const last = cuttingString[0] + cuttingString.slice[1];
+
+
+    const finalResult = str + last;
+
+    const final = finalResult.trim();
+    // 2.将_转为空格
+
+    // 3.trim掉所有不合规字符
+
+    return final;
+  };
+
+  console.log(standardlize(input[i]))
+})
