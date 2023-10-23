@@ -1,8 +1,5 @@
 'use strict';
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
 const restaurant = {
@@ -663,7 +660,7 @@ safetyPass(12312312321);
 ///////////////////////////////////////
 // Coding Challenge #4
 
-/* 
+/*
 Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
 
 The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
@@ -671,7 +668,7 @@ The input will come from a textarea inserted into the DOM (see code below), and 
 THIS TEST DATA (pasted to textarea)
 underscore_case
 first_name
-Some_Variable 
+Some_Variable
   calculate_AGE
 delayed_departure
 
@@ -692,6 +689,9 @@ Afterwards, test with your own test data!
 GOOD LUCK 😀
 */
 
+/*
+
+// 这个太蠢了，重来
 document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
 
@@ -704,26 +704,102 @@ document.querySelector('button').addEventListener('click', function () {
   input[i] = getText.value;
 
   const standardlize = (i) => {
-    const upper = i.indexOf('_');
+    if (i.indexOf('_')) {
+      const upper = i.indexOf('_');
+      const str = i.slice(0, upper);
+      const last = i.slice(upper + 1);
+
+      const replace1 = last[0];
+      const replace2 = last.slice(1);
+      const final = (str.toLowerCase() + last.replace(replace1, replace1.toUpperCase()).replace(replace2, replace2.toLowerCase())).trim();
+
+      return final
+    }
 
     // 1.找到_之后的第一个字母，将其转为大写
-    const newString = i.toLowerCase();
-    const replaceString = newString.replace('_', '');
-    const cuttingString = replaceString.slice(upper);
 
-    const str = replaceString.slice(0, upper);
-    const last = cuttingString[0] + cuttingString.slice[1];
-
-
-    const finalResult = str + last;
-
-    const final = finalResult.trim();
     // 2.将_转为空格
 
     // 3.trim掉所有不合规字符
 
-    return final;
+
   };
 
   console.log(standardlize(input[i]))
+});
+
+*/
+
+/*
+
+// 新的challenge#4
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+  const br = text.split('\n');
+  // let i = 0;
+
+  for (const [index, value] of br.entries()) {
+    const fixed = value.trim().toLowerCase().replace(value[value.indexOf('_') + 1], (value[value.indexOf('_') + 1]).toUpperCase()).replace('_', '');
+    // i++;
+
+    // let emoji = '';
+    // console.log(fixed.padEnd(20, ' ') + emoji.padEnd(index + 1, '✅'))
+    // i++的方法略差于[index, value]，将br变换成带迭代次数的.entries() ARRAY
+    // 这样能直接获取迭代次数而不用通过i++计算
+
+    console.log(fixed.padEnd(20, ' ') + '✅'.repeat(index + 1))
+    // repeat优于空字符后padEnd ✅
+
+  }
+
 })
+
+*/
+
+
+// !!!记住String Function的种类很重要!!!
+
+
+
+///////////////////////////////////////
+// String Methods Practice
+
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+// .replaceAll('+', ';') = .replace(/\+/g,';') : +这个符号，要转换成\+才能被识别到，所以是'/\+/g'
+/*
+const fixValue = flights.replace(/_/g, ' ').replaceAll('+', ';').split(';').entries();
+for (const [i, value] of fixValue) {
+
+  // 1.'_'改空格, ';'是截断,'+'为完结 
+  console.log(i, value)
+
+
+}
+*/
+
+const split = flights.split('+');
+
+for (const [i, value] of split.entries()) {
+  const outputMsg = value.replace(/_/g, ' ').split(';');
+  const [status, plane1, plane2, arrivalTimes] = [...outputMsg];
+  const formatter = (status, plane1, plane2, arrivalTimes) => {
+    const statusNew = status.replace('Delayed', '🔴 Delayed');
+    const [planeNew1, planeNew2] = [plane1.slice(0, 3).toUpperCase(), plane2.slice(0, 3).toUpperCase()];
+    const arrivalTimesNew = arrivalTimes.replace(';', 'h');
+
+    return `${statusNew.padStart(30, ' ')} from ${planeNew1} to ${planeNew2} (${arrivalTimesNew})`
+  }
+
+  console.log(formatter(status, plane1, plane2, arrivalTimes))
+}
