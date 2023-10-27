@@ -6,7 +6,7 @@
 ✅ 06-Modal
 23.10.9  ✅ 07-Pig-Game
 23.10.12 ✅ 08-Behind-the-Scenes
-09-Data-Structures-Operators
+23.10.23 ✅ 09-Data-Structures-Operators
 10-Functions
 11-Arrays-Bankist
 12-Numbers-Dates-Timers-Bankist

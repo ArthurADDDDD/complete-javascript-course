@@ -790,7 +790,7 @@ for (const [i, value] of fixValue) {
 
 const split = flights.split('+');
 
-for (const [i, value] of split.entries()) {
+for (const value of split) {
   const outputMsg = value.replace(/_/g, ' ').split(';');
   const [status, plane1, plane2, arrivalTimes] = [...outputMsg];
   const formatter = (status, plane1, plane2, arrivalTimes) => {
